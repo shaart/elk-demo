@@ -1,0 +1,57 @@
+version: '2.2'
+services:
+  elk-demo:
+    build:
+      dockerfile: docker/Dockerfile
+      context: .
+    image: elk-demo
+    container_name: elk-demo
+    ports:
+      - 8080:8080
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    container_name: elastic
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.8.1
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:9200
+    ### You also and can configure via kibana.yml:
+    ### https://www.elastic.co/guide/en/kibana/7.8/settings.html
+    #volumes:
+    #  - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    depends_on:
+      - elastic
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.8.1
+    container_name: logstash
+    environment:
+      - xpack.monitoring.enabled=false
+      - xpack.monitoring.collection.enabled=false
+      - monitoring.elasticsearch.hosts=http://elastic:9200
+      - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
+    ports:
+      - 5001:5001
+      - 9600:9600
+    depends_on:
+      - elastic
+
+volumes:
+  data01:
+    driver: local
