@@ -3,6 +3,7 @@
 
 # For Java 11
 FROM adoptopenjdk/openjdk11:jre-11.0.8_10-alpine
+EXPOSE 8080
 
 ARG JAR_FILE=build/libs/*.jar
 

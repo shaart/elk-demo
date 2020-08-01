@@ -4,6 +4,7 @@ You'll need installed Docker on your machine.
 ## With docker-compose
 Run command
 ```shell script
+./gradlew build
 docker-compose up
 ```
 Check the containers
@@ -54,6 +55,7 @@ _____
 #### Application
 * Build image with command
 ```shell script
+./gradlew build
 docker build -f docker/Dockerfile -t elk-demo .
 ```
 #### Elastic
