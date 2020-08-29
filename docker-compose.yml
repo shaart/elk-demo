@@ -1,13 +1,24 @@
 version: '2.2'
 services:
-  elk-demo:
+  task-service:
     build:
       dockerfile: docker/Dockerfile
-      context: .
-    image: elk-demo
-    container_name: elk-demo
+      context: ./task-service
+    image: task-service
+    container_name: task-service
     ports:
       - 8080:8080
+    volumes:
+    - ./logs:/logs
+
+  time-service:
+    build:
+      dockerfile: docker/Dockerfile
+      context: ./time-service
+    image: time-service
+    container_name: time-service
+    ports:
+      - 8081:8080
     volumes:
     - ./logs:/logs
 
