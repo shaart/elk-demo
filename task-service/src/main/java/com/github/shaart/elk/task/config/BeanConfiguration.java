@@ -1,4 +1,4 @@
-package com.github.shaart.demo.elk;
+package com.github.shaart.elk.task.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
