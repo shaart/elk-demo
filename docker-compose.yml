@@ -2,10 +2,16 @@ version: '2.2'
 services:
   task-service:
     build:
-      dockerfile: docker/Dockerfile
+      dockerfile: ../docker/Dockerfile
       context: ./task-service
     image: task-service
     container_name: task-service
+    environment:
+      - "shaart.elk.time-service.host=http://timeservice"
+      - "shaart.elk.time-service.port=8080"
+      - "logging.level.com.github.shaart.elk=trace"
+    links:
+      - "time-service:timeservice"
     ports:
       - 8080:8080
     volumes:
@@ -13,10 +19,12 @@ services:
 
   time-service:
     build:
-      dockerfile: docker/Dockerfile
+      dockerfile: ../docker/Dockerfile
       context: ./time-service
     image: time-service
     container_name: time-service
+    environment:
+      - "logging.level.com.github.shaart.elk=trace"
     ports:
       - 8081:8080
     volumes:
