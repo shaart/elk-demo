@@ -68,8 +68,10 @@ services:
       - monitoring.elasticsearch.hosts=http://elastic:9200
       - "LS_JAVA_OPTS=-Xmx2G -Xms2G"
     volumes:
+    - /d/git/elk-demo/logstash/config:/usr/share/logstash/config
     - /d/git/elk-demo/logstash/pipeline:/usr/share/logstash/pipeline
-    - ./logs:/usr/share/logstash/input
+    - ./logs:/usr/share/logstash/input/demo
+    - /d/git/team-f-discord-bot/logs:/usr/share/logstash/input/discord-bot
     ports:
       - 5001:5001
       - 9600:9600

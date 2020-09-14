@@ -1,0 +1,10 @@
+- pipeline.id: demo
+  pipeline.batch.size: 10
+  queue.type: persisted
+  path.config: "./pipeline/logstash.conf"
+  queue.page_capacity: 50mb
+- pipeline.id: discord-bot
+  pipeline.batch.size: 10
+  queue.type: persisted
+  path.config: "./pipeline/discord-bot.conf"
+  queue.page_capacity: 50mb
